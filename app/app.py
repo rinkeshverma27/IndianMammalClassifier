@@ -5,7 +5,13 @@ from pathlib import Path
 import streamlit as st
 from PIL import Image
 
-from inference import load_checkpoint, load_species_info, predict_image
+from inference import (
+    analyze_image,
+    load_checkpoint,
+    load_inference_config,
+    load_mammal_detector,
+    load_species_info,
+)
 
 
 st.set_page_config(page_title="Indian Mammal Classifier", layout="centered")
@@ -14,8 +20,19 @@ st.set_page_config(page_title="Indian Mammal Classifier", layout="centered")
 @st.cache_resource
 def load_artifacts():
     model, classes, config = load_checkpoint()
+    detector_model, detector_transform, mammal_indices = load_mammal_detector()
+    inference_config = load_inference_config()
     species_info = load_species_info(Path("app/species_info.json"))
-    return model, classes, config, species_info
+    return (
+        model,
+        classes,
+        config,
+        detector_model,
+        detector_transform,
+        mammal_indices,
+        inference_config,
+        species_info,
+    )
 
 
 def render_species_info(label: str, species_info: dict) -> None:
@@ -39,7 +56,16 @@ def main() -> None:
     st.caption("EfficientNet-B0 image classifier for 14 Indian mammal classes.")
 
     try:
-        model, classes, config, species_info = load_artifacts()
+        (
+            model,
+            classes,
+            config,
+            detector_model,
+            detector_transform,
+            mammal_indices,
+            inference_config,
+            species_info,
+        ) = load_artifacts()
     except FileNotFoundError as exc:
         st.error(str(exc))
         st.stop()
@@ -55,21 +81,37 @@ def main() -> None:
     image = Image.open(uploaded_file)
     st.image(image, caption="Uploaded image", use_container_width=True)
 
-    predictions = predict_image(
+    analysis = analyze_image(
         image=image,
-        model=model,
+        classifier_model=model,
         classes=classes,
-        img_size=config.get("img_size", 224),
-        top_k=3,
+        classifier_config=config,
+        detector_model=detector_model,
+        detector_transform=detector_transform,
+        mammal_indices=mammal_indices,
+        inference_config=inference_config,
     )
 
+    st.caption(f"Mammal filter score: {analysis['mammal_score'] * 100:.2f}%")
+
+    if analysis["status"] == "rejected_non_mammal":
+        st.error("Unknown / Not an Indian mammal")
+        st.write(analysis["message"])
+        return
+
     st.subheader("Top Predictions")
-    for rank, pred in enumerate(predictions, start=1):
+    for rank, pred in enumerate(analysis["predictions"], start=1):
         st.write(f"{rank}. {pred['label']} - {pred['confidence'] * 100:.2f}%")
 
-    top_label = predictions[0]["label"]
-    st.progress(float(predictions[0]["confidence"]))
-    render_species_info(top_label, species_info)
+    top_prediction = analysis["predictions"][0]
+    st.progress(float(top_prediction["confidence"]))
+
+    if analysis["status"] == "rejected_unknown":
+        st.warning("Unknown / Not an Indian mammal")
+        st.write(analysis["message"])
+        return
+
+    render_species_info(top_prediction["label"], species_info)
 
 
 if __name__ == "__main__":

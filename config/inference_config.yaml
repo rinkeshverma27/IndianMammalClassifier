@@ -1,0 +1,3 @@
+mammal_detector_threshold: 0.20
+classifier_unknown_threshold: 0.55
+top_k: 3

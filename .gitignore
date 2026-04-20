@@ -8,8 +8,7 @@ data
 data/train/
 data/val/
 
-models/*.pt
-models/*.pth
+
 models/*.json
 !app/species_info.json
 
