@@ -104,7 +104,7 @@ indian-mammals-identifier/
 │   └── generate_metadata.py   # Stage 5: JSON knowledge base
 │
 ├── models/
-│   └── indian_mammals_v1.pth   # Trained weights (gitignored, upload separately)
+│   └── indian_mammals_v1.pt   # Trained weights (gitignored, upload separately)
 │
 ├── app/
 │   ├── app.py                  # Main Streamlit application

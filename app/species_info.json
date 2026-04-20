@@ -1,0 +1,128 @@
+{
+  "Asiatic Lion": {
+    "scientific_name": "Panthera leo persica",
+    "iucn_status": "Endangered",
+    "habitat": "Dry deciduous forest, scrub forest, and savanna-like grasslands.",
+    "distribution": "Primarily in and around Gir landscape, Gujarat.",
+    "diet": "Large herbivores such as deer, antelope, and livestock when conflict occurs.",
+    "fun_fact": "The Asiatic lion is the only wild lion population left in Asia.",
+    "summary": "A smaller-maned lion subspecies with a highly restricted range in western India."
+  },
+  "Asiatic Wildcat": {
+    "scientific_name": "Felis lybica ornata",
+    "iucn_status": "Least Concern",
+    "habitat": "Arid scrublands, grasslands, and semi-desert regions.",
+    "distribution": "Northwestern and central parts of the Indian subcontinent.",
+    "diet": "Rodents, birds, reptiles, and small mammals.",
+    "fun_fact": "Its coat pattern helps it blend into dry grass and sandy terrain.",
+    "summary": "A small wild feline adapted to open, dry landscapes and elusive hunting."
+  },
+  "Bengal Fox": {
+    "scientific_name": "Vulpes bengalensis",
+    "iucn_status": "Least Concern",
+    "habitat": "Grasslands, scrublands, and semi-arid plains.",
+    "distribution": "Widely distributed across the Indian subcontinent.",
+    "diet": "Insects, rodents, reptiles, fruits, and small birds.",
+    "fun_fact": "Its bushy tail often has a distinct dark tip.",
+    "summary": "A small native fox of open country, often seen in dry plains and scrub."
+  },
+  "Chinkara": {
+    "scientific_name": "Gazella bennettii",
+    "iucn_status": "Least Concern",
+    "habitat": "Deserts, scrublands, and dry grasslands.",
+    "distribution": "Western and central India, especially Rajasthan and Gujarat.",
+    "diet": "Grasses, herbs, leaves, and shrubs.",
+    "fun_fact": "Chinkara can survive with very little free-standing water.",
+    "summary": "Also called the Indian gazelle, this nimble antelope is built for arid habitats."
+  },
+  "Chital": {
+    "scientific_name": "Axis axis",
+    "iucn_status": "Least Concern",
+    "habitat": "Moist and dry deciduous forests, grasslands, and woodland edges.",
+    "distribution": "Widespread across much of India.",
+    "diet": "Grasses, leaves, fruits, and tender shoots.",
+    "fun_fact": "The chital keeps its white spots throughout life.",
+    "summary": "A highly recognizable spotted deer and one of India's most common ungulates."
+  },
+  "Four Horned Antelope": {
+    "scientific_name": "Tetracerus quadricornis",
+    "iucn_status": "Vulnerable",
+    "habitat": "Dry deciduous forests, hilly terrain, and open woodland.",
+    "distribution": "Patchy distribution across central and southern India.",
+    "diet": "Grass, leaves, flowers, and fruit.",
+    "fun_fact": "It is the only living antelope species with four horns.",
+    "summary": "A shy and uncommon antelope known for its unusual horn arrangement."
+  },
+  "Golden Jackal": {
+    "scientific_name": "Canis aureus",
+    "iucn_status": "Least Concern",
+    "habitat": "Scrubland, agricultural edges, wetlands, and open country.",
+    "distribution": "Found across much of India.",
+    "diet": "Omnivorous: small vertebrates, carrion, insects, and fruit.",
+    "fun_fact": "Golden jackals are highly adaptable and often thrive near human-altered landscapes.",
+    "summary": "A versatile canid that occupies a wide range of habitats across the subcontinent."
+  },
+  "Honey Badger": {
+    "scientific_name": "Mellivora capensis",
+    "iucn_status": "Least Concern",
+    "habitat": "Grasslands, dry forests, and semi-arid regions.",
+    "distribution": "Scattered parts of northwestern, central, and peninsular India.",
+    "diet": "Small vertebrates, insects, reptiles, eggs, roots, and honey.",
+    "fun_fact": "Honey badgers are famous for their bold behavior and strong digging ability.",
+    "summary": "A tough, low-slung mustelid with a broad diet and strong defensive instincts."
+  },
+  "Indian Leopard": {
+    "scientific_name": "Panthera pardus fusca",
+    "iucn_status": "Vulnerable",
+    "habitat": "Forests, hills, scrublands, and even peri-urban edges.",
+    "distribution": "Widely distributed across India.",
+    "diet": "Deer, wild boar, primates, livestock, and other medium-sized prey.",
+    "fun_fact": "Leopards are among the most adaptable big cats in India.",
+    "summary": "A powerful and elusive big cat able to survive in varied Indian landscapes."
+  },
+  "Jungle Cat": {
+    "scientific_name": "Felis chaus",
+    "iucn_status": "Least Concern",
+    "habitat": "Wetlands, reed beds, scrub, and agricultural fringes.",
+    "distribution": "Across many parts of India except the highest elevations.",
+    "diet": "Rodents, birds, frogs, and reptiles.",
+    "fun_fact": "Despite its name, the jungle cat is often found in open wetlands and grasslands.",
+    "summary": "A medium-sized wild cat with long legs and a preference for dense ground cover."
+  },
+  "Nilgai": {
+    "scientific_name": "Boselaphus tragocamelus",
+    "iucn_status": "Least Concern",
+    "habitat": "Open woodland, scrub, farmland edges, and grasslands.",
+    "distribution": "Northern, western, and central India.",
+    "diet": "Grasses, herbs, leaves, buds, and crops.",
+    "fun_fact": "Nilgai is the largest antelope in Asia.",
+    "summary": "A large antelope of open country, commonly seen in agricultural mosaics and scrub."
+  },
+  "Ruddy Mongoose": {
+    "scientific_name": "Herpestes smithii",
+    "iucn_status": "Least Concern",
+    "habitat": "Forests, scrublands, and rocky areas.",
+    "distribution": "Mainly peninsular India and Sri Lanka.",
+    "diet": "Insects, reptiles, small mammals, birds, and eggs.",
+    "fun_fact": "Its reddish coat and dark tail tip help distinguish it from other mongooses.",
+    "summary": "A terrestrial mongoose often found foraging in scrub and lightly wooded habitats."
+  },
+  "Striped Hyena": {
+    "scientific_name": "Hyaena hyaena",
+    "iucn_status": "Near Threatened",
+    "habitat": "Dry scrublands, semi-deserts, rocky terrain, and open woodland.",
+    "distribution": "Northwestern, central, and parts of peninsular India.",
+    "diet": "Carrion, small vertebrates, fruit, and refuse.",
+    "fun_fact": "The long mane on its neck and back can stand upright when threatened.",
+    "summary": "A mostly nocturnal scavenger with a distinctive sloping back and striped coat."
+  },
+  "Wild Boar": {
+    "scientific_name": "Sus scrofa cristatus",
+    "iucn_status": "Least Concern",
+    "habitat": "Forests, wetlands, agricultural landscapes, and grasslands.",
+    "distribution": "Widely distributed across India.",
+    "diet": "Roots, tubers, fruits, invertebrates, carrion, and crops.",
+    "fun_fact": "Wild boar use their snouts to root through soil in search of food.",
+    "summary": "A hardy and highly adaptable omnivore found in a wide range of Indian habitats."
+  }
+}
