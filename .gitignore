@@ -9,7 +9,6 @@ data/train/
 data/val/
 
 
-models/*.json
-!app/species_info.json
+models/*.json!app/species_info.json
 
 .streamlit/
