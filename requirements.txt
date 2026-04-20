@@ -7,3 +7,5 @@ matplotlib
 numpy
 tqdm
 PyYAML
+python-dotenv
+google-generativeai

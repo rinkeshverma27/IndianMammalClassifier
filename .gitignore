@@ -7,8 +7,8 @@ __pycache__/
 data
 data/train/
 data/val/
+.env
 
-
-models/*.json!app/species_info.json
+!app/species_info.json
 
 .streamlit/
