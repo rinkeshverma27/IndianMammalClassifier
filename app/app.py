@@ -131,6 +131,22 @@ def inject_styles() -> None:
             margin-bottom: 0.75rem;
             font-size: 0.84rem;
         }
+        div[data-testid="stTextInput"] {
+            width: 100%;
+        }
+        div[data-testid="stTextInput"] > div {
+            width: 100%;
+        }
+        div[data-testid="stTextInputRootElement"] {
+            width: 100%;
+        }
+        div[data-testid="stTextInputRootElement"] > div {
+            width: 100%;
+        }
+        div[data-testid="stTextInputRootElement"] input {
+            width: 100%;
+            min-width: 100%;
+        }
         </style>
         """,
         unsafe_allow_html=True,
@@ -159,6 +175,7 @@ def load_artifacts():
 
 def init_state() -> None:
     st.session_state.setdefault("chat_history", [])
+    st.session_state.setdefault("chat_status", "")
 
 
 def reset_chat_if_species_changed(active_species: str | None) -> None:
@@ -166,6 +183,7 @@ def reset_chat_if_species_changed(active_species: str | None) -> None:
     if previous_species != active_species:
         st.session_state["chat_species"] = active_species
         st.session_state["chat_history"] = []
+        st.session_state["chat_status"] = ""
 
 
 def render_header() -> None:
@@ -268,6 +286,9 @@ def render_chat_panel(active_species: str | None, species_info: dict, gemini_mod
         f"Chat is focused on: {active_species}" if active_species else "Chat is idle until a species is confidently identified."
     )
     st.caption(help_text)
+    chat_status = st.session_state.get("chat_status", "")
+    if chat_status:
+        st.caption(f"Response source: {chat_status}")
 
     with st.form("chat_form", clear_on_submit=True):
         question = st.text_input("Ask anything", placeholder="What does it eat? Where is it found?")
@@ -276,12 +297,14 @@ def render_chat_panel(active_species: str | None, species_info: dict, gemini_mod
     clear = st.button("Clear Chat", use_container_width=True)
     if clear:
         st.session_state["chat_history"] = []
+        st.session_state["chat_status"] = ""
         st.rerun()
 
     if send and question.strip():
         st.session_state["chat_history"].append({"role": "user", "content": question.strip()})
         response = get_chat_response(question, active_species, species_info, gemini_model)
-        st.session_state["chat_history"].append({"role": "assistant", "content": response})
+        st.session_state["chat_history"].append({"role": "assistant", "content": response["text"]})
+        st.session_state["chat_status"] = f"{response['source']} ({response['status']})"
         st.rerun()
 
 
