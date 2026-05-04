@@ -1,10 +1,10 @@
 # Indian Mammal Classifier
 
-This project trains and serves a deep learning image classifier for 14 Indian mammal classes using EfficientNet-B0, PyTorch, and Streamlit.
+This project trains and serves a deep learning image classifier for a curated Indian mammal dataset using EfficientNet-B0, PyTorch, and Streamlit.
 
 ## Current Scope
 
-The current dataset contains these 14 classes:
+The current dataset is built from a curated set of Indian mammal folders placed directly inside `data/`.
 
 - Asiatic Lion
 - Asiatic Wildcat
@@ -90,6 +90,6 @@ The app shows:
 
 ## Notes
 
-- This implementation is intentionally aligned to the uploaded 14-class mammal dataset.
+- This implementation is intentionally aligned to the curated mammal folders available under `data/`.
 - `app/species_info.json` is generated from a local curated dictionary, so the app works without an external API.
 - If you later add more mammal classes, update `scripts/prepare_dataset.py` and regenerate metadata if needed.

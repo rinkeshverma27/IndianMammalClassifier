@@ -1,7 +1,7 @@
 model_name: efficientnet_b0
 img_size: 224
 batch_size: 32
-epochs: 8
+epochs: 30
 lr_head: 0.001
 lr_backbone: 0.0001
 weight_decay: 0.0001
@@ -12,3 +12,4 @@ val_dir: data/val
 checkpoint_path: models/indian_mammals_efficientnet_b0.pt
 class_names_path: models/class_names.json
 history_path: models/training_history.json
+plots_dir: models/plots

@@ -244,7 +244,7 @@ def analyze_image(
             "status": "rejected_unknown",
             "mammal_score": mammal_score,
             "predictions": predictions,
-            "message": "This looks like a mammal, but not confidently one of the 14 Indian mammal classes.",
+            "message": "This looks like a mammal, but not confidently one of the supported Indian mammal classes.",
         }
 
     return {

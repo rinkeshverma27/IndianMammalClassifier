@@ -8,6 +8,7 @@ import json
 import time
 from pathlib import Path
 
+import matplotlib.pyplot as plt
 import timm
 import torch
 import torch.nn as nn
@@ -34,6 +35,7 @@ DEFAULT_CONFIG = {
     "checkpoint_path": "models/indian_mammals_efficientnet_b0.pt",
     "class_names_path": "models/class_names.json",
     "history_path": "models/training_history.json",
+    "plots_dir": "models/plots",
 }
 CONFIG_PATH = Path("config/train_config.yaml")
 
@@ -179,6 +181,85 @@ def evaluate(
     return running_loss / total, correct / total
 
 
+@torch.no_grad()
+def collect_predictions(
+    model: nn.Module,
+    loader: DataLoader,
+    device: torch.device,
+) -> tuple[list[int], list[int]]:
+    model.eval()
+    targets: list[int] = []
+    predictions: list[int] = []
+
+    for images, labels in tqdm(loader, desc="Confusion Matrix", leave=False):
+        images = images.to(device)
+        logits = model(images)
+        preds = logits.argmax(dim=1).cpu().tolist()
+        predictions.extend(preds)
+        targets.extend(labels.tolist())
+
+    return targets, predictions
+
+
+def save_training_curves(history: dict, output_path: Path) -> None:
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    epochs = range(1, len(history["train_acc"]) + 1)
+
+    fig, axes = plt.subplots(1, 2, figsize=(12, 4.5))
+
+    axes[0].plot(epochs, history["train_acc"], marker="o", label="Train")
+    axes[0].plot(epochs, history["val_acc"], marker="o", label="Val")
+    axes[0].set_title("Accuracy")
+    axes[0].set_xlabel("Epoch")
+    axes[0].set_ylabel("Accuracy")
+    axes[0].grid(True, alpha=0.3)
+    axes[0].legend()
+
+    axes[1].plot(epochs, history["train_loss"], marker="o", label="Train")
+    axes[1].plot(epochs, history["val_loss"], marker="o", label="Val")
+    axes[1].set_title("Loss")
+    axes[1].set_xlabel("Epoch")
+    axes[1].set_ylabel("Loss")
+    axes[1].grid(True, alpha=0.3)
+    axes[1].legend()
+
+    fig.tight_layout()
+    fig.savefig(output_path, dpi=150, bbox_inches="tight")
+    plt.close(fig)
+
+
+def save_confusion_matrix(
+    targets: list[int],
+    predictions: list[int],
+    class_names: list[str],
+    output_path: Path,
+) -> None:
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    num_classes = len(class_names)
+    matrix = torch.zeros((num_classes, num_classes), dtype=torch.int32)
+
+    for true_idx, pred_idx in zip(targets, predictions):
+        matrix[true_idx, pred_idx] += 1
+
+    fig_width = max(10, num_classes * 0.45)
+    fig_height = max(8, num_classes * 0.4)
+    fig, ax = plt.subplots(figsize=(fig_width, fig_height))
+    image = ax.imshow(matrix.numpy(), cmap="YlGnBu")
+    fig.colorbar(image, ax=ax, fraction=0.046, pad=0.04)
+
+    ax.set_title("Validation Confusion Matrix")
+    ax.set_xlabel("Predicted label")
+    ax.set_ylabel("True label")
+    ax.set_xticks(range(num_classes))
+    ax.set_yticks(range(num_classes))
+    ax.set_xticklabels(class_names, rotation=90, fontsize=8)
+    ax.set_yticklabels(class_names, fontsize=8)
+
+    fig.tight_layout()
+    fig.savefig(output_path, dpi=150, bbox_inches="tight")
+    plt.close(fig)
+
+
 def main() -> None:
     config = load_config()
     train_dir = Path(config["train_dir"])
@@ -189,6 +270,8 @@ def main() -> None:
         )
 
     Path("models").mkdir(parents=True, exist_ok=True)
+    plots_dir = Path(config["plots_dir"])
+    plots_dir.mkdir(parents=True, exist_ok=True)
     print(f"Loaded config from: {CONFIG_PATH if CONFIG_PATH.exists() else 'defaults'}")
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -254,6 +337,17 @@ def main() -> None:
                 break
 
     idx_to_class = {idx: name for name, idx in train_dataset.class_to_idx.items()}
+    class_names = [idx_to_class[idx] for idx in sorted(idx_to_class)]
+
+    checkpoint = torch.load(config["checkpoint_path"], map_location=device)
+    model.load_state_dict(checkpoint["model_state_dict"])
+    targets, predictions = collect_predictions(model, val_loader, device)
+
+    curves_path = plots_dir / "training_curves.png"
+    confusion_matrix_path = plots_dir / "confusion_matrix.png"
+    save_training_curves(history, curves_path)
+    save_confusion_matrix(targets, predictions, class_names, confusion_matrix_path)
+
     with open(config["class_names_path"], "w", encoding="utf-8") as handle:
         json.dump(idx_to_class, handle, indent=2, ensure_ascii=True)
     with open(config["history_path"], "w", encoding="utf-8") as handle:
@@ -264,6 +358,10 @@ def main() -> None:
                 "num_classes": len(train_dataset.classes),
                 "train_images": len(train_dataset),
                 "val_images": len(val_dataset),
+                "plots": {
+                    "training_curves": str(curves_path),
+                    "confusion_matrix": str(confusion_matrix_path),
+                },
             },
             handle,
             indent=2,
@@ -272,6 +370,8 @@ def main() -> None:
 
     print(f"Best validation accuracy: {best_val_acc:.4f}")
     print(f"Saved checkpoint to {config['checkpoint_path']}")
+    print(f"Saved training curves to {curves_path}")
+    print(f"Saved confusion matrix to {confusion_matrix_path}")
 
 
 if __name__ == "__main__":

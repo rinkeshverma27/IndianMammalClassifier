@@ -232,7 +232,7 @@ def render_info_panel(active_species: str | None, species_info: dict, analysis: 
         return
 
     if active_species is None:
-        st.warning("The image looks mammal-like, but the classifier is not confident enough to assign one of the 14 classes.")
+        st.warning("The image looks mammal-like, but the classifier is not confident enough to assign one of the supported classes.")
         return
 
     info = species_info.get(active_species)
