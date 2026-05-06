@@ -1,6 +1,7 @@
 
 # Data Collection Process
 - This dataset consists of image data focused on Indian mammal species, curated specifically for image classification tasks.
+- **link** - https://www.kaggle.com/datasets/prabhashpadhan/indianmammal
 
 ### Dataset Categories
 The dataset is organized into folders by species name. Popular indian mammals are considered for this assignment. Aroung 4500 images are there accross 33 categories. It includes below categories:  

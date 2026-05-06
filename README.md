@@ -39,7 +39,10 @@ This dataset consists of image data focused on Indian mammal species, curated sp
 - indian_giant_squirrel
 - indian_grey_mongoose
 - indian_hedgehog
-- indian_palm_squirrel
+- indian_palm_squirrel  
+  
+**link** - https://www.kaggle.com/datasets/prabhashpadhan/indianmammal  
+
 
 ## Project Structure
 
