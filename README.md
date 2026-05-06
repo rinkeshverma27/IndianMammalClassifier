@@ -1,4 +1,5 @@
-# Indian Mammal Classifier
+# Indian Mammal Classifier Team Brainiacs 
+
 
 This project trains and serves a deep learning image classifier for a curated Indian mammal dataset using EfficientNet-B0, PyTorch, and Streamlit.
 
